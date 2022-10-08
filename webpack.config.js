@@ -18,7 +18,18 @@ module.exports = {
             'css-loader',
             'sass-loader'
           ]
+        },
+        {
+        test: /\.(png|jpe?g|gif|webp)$/,
+        use: 'file-loader'
         }
       ]
     },
+    resolve: {
+      extensions: ['.js', '.vue'],
+      alias: {
+        '~': path.resolve(__dirname, 'src'),
+        'assets': path.resolve(__dirname, 'src/assets')
+      },
+    }
   }

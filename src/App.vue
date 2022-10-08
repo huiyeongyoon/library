@@ -1,17 +1,14 @@
-<template>
-  <div id="app">
-    <p>{{currentDateTime()}}</p>
-  </div>
+<template lang="pug">
+  #app
+    App
 </template>
-
 <script>
-import moment from 'moment'
-
+import App from '@/layouts'
 export default {
-  methods: {
-    currentDateTime() {
-      return moment().format('MMMM Do YYYY, h:mm:ss a')
-    }
+  components: {
+    App
   }
-};
+}
 </script>
+<style lang="scss">@import '@/assets/style.scss'</style>
+
