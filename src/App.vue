@@ -1,14 +1,26 @@
+<style lang="scss" scoped>
+#app {
+  min-height: 100%;
+  height: 100%;
+  min-width: 1280px;
+}
+</style>
+
 <template lang="pug">
-  #app
-    App
+#app
+  router-view(:key="key")
 </template>
+
 <script>
-import App from '@/layouts'
 export default {
+  name: "App",
   components: {
-    App
-  }
+    key() {
+      return this.$route.path
+    },
+  },
+  mounted() {
+    console.log(this.$route.path)
+  },
 }
 </script>
-<style lang="scss">@import '@/assets/style.scss'</style>
-
