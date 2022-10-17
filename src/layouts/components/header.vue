@@ -1,9 +1,7 @@
 <template lang="pug">
-  el-header Header
+el-header Header
 </template>
 
-<script>
-</script>
+<script></script>
 
-<style lang="sass">
-</style>
+<style lang="sass"></style>

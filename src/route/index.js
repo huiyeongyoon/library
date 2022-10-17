@@ -6,9 +6,10 @@ import _ from "lodash"
 import NProgress from "nprogress"
 import "nprogress/nprogress.css"
 
+import Layouts from "@/layouts"
 import PageNotFound from "@/views/pageNotFound.vue"
 
-// import homeRouter from './modules/home'
+// import homeRouter from '@/layouts'
 
 Vue.use(Router)
 
@@ -17,7 +18,7 @@ export const constantRoutes = _.concat(
   // homeRouter,
   {
     path: "/",
-    component: PageNotFound,
+    component: Layouts,
   },
   // {
   //   path: "/login",

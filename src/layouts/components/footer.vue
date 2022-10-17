@@ -1,9 +1,7 @@
 <template lang="pug">
-  el-footer Footer
+el-footer Footer
 </template>
 
-<script>
-</script>
+<script></script>
 
-<style lang="sass">
-</style>
+<style lang="sass"></style>
