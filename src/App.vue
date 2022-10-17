@@ -14,7 +14,7 @@
 <script>
 export default {
   name: "App",
-  components: {
+  computed: {
     key() {
       return this.$route.path
     },
