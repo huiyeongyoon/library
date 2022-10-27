@@ -55,6 +55,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
       기능설명
       역할및 성과
 
+    스킬
+
   기능
     로딩
 

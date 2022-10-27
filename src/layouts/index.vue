@@ -1,10 +1,7 @@
 <template lang="pug">
 el-container
-  HeaderComponent Header
-  el-main Main
-    p.a 1
-    p.b 2
-    p.c 3
+  HeaderComponent(:headerLists="navLists") Header
+  el-main
   Footeromponen Footer
 </template>
 
@@ -16,12 +13,17 @@ export default {
     HeaderComponent,
     Footeromponen,
   },
+  data() {
+    return {
+      navLists: ["About Me", "Skills", "Proejcts"],
+    }
+  },
+  methods: {
+    placeUsers(event) {
+      console.log(event.target)
+    },
+  },
 }
 </script>
 
-<style lang="scss">
-p {
-  height: 100vh;
-  border: 1px solid;
-}
-</style>
+<style lang="scss"></style>
