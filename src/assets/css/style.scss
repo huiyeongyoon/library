@@ -153,7 +153,7 @@ span {
   text-align: center;
   line-height: 80px;
   height: 80px !important;
-  background: repeating-linear-gradient(45deg, #f0f2ed, #f0f2ed 20px, #f8f4eb 20px, #f8f4eb 40px);
+  background: black;
   box-shadow: 0 4px 6px rgba(0,0,0,.2);  
   width: 100%;
   ul {
@@ -184,8 +184,10 @@ span {
 .el-main {
   display: flex;
   height: 100%;
-}
+  .leftSide {
+    width: 22%;
+    border: 1px solid black;
+  }
+  
 
-.el-footer  {
-  border: 1px solid;
 }

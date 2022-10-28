@@ -2,7 +2,7 @@
 el-header
   .nav
     ul
-      li(v-for="headerList in headerLists" @click="placeUsers") 
+      li(v-for="headerList in headerLists") 
         span {{ headerList }}
 </template>
 
@@ -14,11 +14,13 @@ export default {
       default: () => {},
     },
   },
-  methods: {
-    placeUsers(event) {
-      console.log(event.target)
-    },
-  },
+  methods: {},
 }
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.nav {
+  ul {
+    margin: 0px;
+  }
+}
+</style>
