@@ -1,7 +1,7 @@
 <template lang="pug">
 el-container
   HeaderComponent(:headerLists="navLists")
-  MainComponent(:leftLists='navLists' :projectData='projectData')
+  MainComponent(:leftLists='navLists' :listData='listData')
   Footeromponen Footer
 </template>
 
@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       navLists: ["About Me", "Skills", "Proejcts"],
-      projectData: [
+      listData: [
         {
           name: "project1",
           date: "2000년 1월1일",

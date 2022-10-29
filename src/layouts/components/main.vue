@@ -7,12 +7,12 @@ el-main
           h1 {{ leftList }}
     .leftContainer
       ul(v-infinite-scroll="load")
-        li(v-for="projectData in totalProjectData")
+        li(v-for="listData in totalListData")
           .image-container
-            img(:src="projectData.image")
+            img(:src="listData.image")
           .p-container 
-            h1 project name: {{ projectData.name }}
-            p terms: {{ projectData.date }}
+            h1 project name: {{ listData.name }}
+            p terms: {{ listData.date }}
   .main 메인
 </template>
 
@@ -23,14 +23,16 @@ export default {
       type: Array,
       default: () => {},
     },
-    projectData: {
+    listData: {
       type: Array,
       default: () => {},
     },
   },
   data() {
     return {
-      totalProjectData: [],
+      totalListData: [],
+      defaultListDataCount: 5,
+      addedListData: 0,
     }
   },
   mounted() {
@@ -38,13 +40,16 @@ export default {
   },
   methods: {
     load() {
-      let times = 1
-      let count = 4 * times
-      if (this.projectData.length !== count) {
-        for (let i = 0; i < count; i++) {
-          this.totalProjectData.push(this.projectData[i])
-        }
-        times + 1
+        let totalListDataCount = this.defaultListDataCount + this.addedListData
+        if(this.totalListData.length < this.listData.length) {
+          for (let i = this.addedListData; i < totalListDataCount; i++) {
+            if(totalListDataCount > this.totalListData.length) {
+              if(this.listData[i] !== undefined) {
+                this.totalListData.push(this.listData[i])
+              }
+            }
+          }
+        this.addedListData += 5;
       }
     },
   },
@@ -54,6 +59,10 @@ export default {
 <style lang="scss">
 .leftSide {
   overflow: auto;
+  height: 100%;
+}
+.leftSide::-webkit-scrollbar { 
+  display: none; 
   height: 100%;
 }
 .left-nav {
