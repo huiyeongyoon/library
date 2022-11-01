@@ -6,14 +6,23 @@ el-main
         li(v-for="leftList in leftLists") 
           h1 {{ leftList }}
     .leftContainer
-      ul(v-infinite-scroll="load")
-        li(v-for="listData in totalListData")
+      ul(v-infinite-scroll="fetchData")
+        li(v-for="(listData, index) in totalListData" @click="fetchList(listData, index)")
           .image-container
             img(:src="listData.image")
           .p-container 
             h1 project name: {{ listData.name }}
-            p terms: {{ listData.date }}
-  .main 메인
+            p period: {{ listData.period }}
+  .main
+    .top
+      h1 {{ mainData.name }}
+      p period: {{ mainData.period }}
+    .middle 
+      h1 {{ mainData.name }}
+      p period: {{ mainData.period }}
+      img(:src="mainData.image")
+    .bottom
+      p 사용기술: 
 </template>
 
 <script>
@@ -33,23 +42,33 @@ export default {
       totalListData: [],
       defaultListDataCount: 5,
       addedListData: 0,
+      mainData: [],
     }
   },
   mounted() {
-    this.load()
+    this.fetchData()
+    this.fetchList()
   },
   methods: {
-    load() {
-        let totalListDataCount = this.defaultListDataCount + this.addedListData
-        if(this.totalListData.length < this.listData.length) {
-          for (let i = this.addedListData; i < totalListDataCount; i++) {
-            if(totalListDataCount > this.totalListData.length) {
-              if(this.listData[i] !== undefined) {
-                this.totalListData.push(this.listData[i])
-              }
+    fetchData() {
+      let totalListDataCount = this.defaultListDataCount + this.addedListData
+      if (this.totalListData.length < this.listData.length) {
+        for (let i = this.addedListData; i < totalListDataCount; i++) {
+          if (totalListDataCount > this.totalListData.length) {
+            if (this.listData[i] !== undefined) {
+              this.totalListData.push(this.listData[i])
             }
           }
-        this.addedListData += 5;
+        }
+        this.addedListData += 5
+      }
+    },
+    fetchList(listData) {
+      if (listData === undefined) {
+        this.mainData = this.totalListData[0]
+      }
+      if (listData) {
+        this.mainData = listData
       }
     },
   },
@@ -61,8 +80,8 @@ export default {
   overflow: auto;
   height: 100%;
 }
-.leftSide::-webkit-scrollbar { 
-  display: none; 
+.leftSide::-webkit-scrollbar {
+  display: none;
   height: 100%;
 }
 .left-nav {
