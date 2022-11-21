@@ -6,13 +6,15 @@ el-main
         li(v-for="leftList in leftLists") 
           h1 {{ leftList }}
     .leftContainer
-      ul(v-infinite-scroll="fetchData")
+      ul(v-infinite-scroll="fetchData" infinite-scroll-disabled="disabled")
         li(v-for="(listData, index) in totalListData" @click="fetchList(listData, index)")
           .image-container
             img(:src="listData.image")
           .p-container 
             h1 project name: {{ listData.name }}
             p period: {{ listData.period }}
+            p(v-if="loading") Loading...
+            p(v-if="noMore") No more
   .main
     .top
       h1 {{ mainData.name }}
@@ -26,7 +28,6 @@ el-main
     .bottom
       p 사용기술: 
 </template>
-
 <script>
 export default {
   props: {
@@ -42,48 +43,60 @@ export default {
   data() {
     return {
       totalListData: [],
-      defaultListDataCount: 5,
+      defaultListDataCount: 10,
       addedListData: 0,
       mainData: [],
+      loading: false,
     }
   },
   mounted() {
     this.fetchData()
     this.fetchList()
   },
+  computed: {
+    noMore() {
+      return this.totalListData.length === this.listData.length
+    },
+    disabled() {
+      return this.loading || this.noMore
+    },
+  },
   methods: {
     fetchData() {
-      let totalListDataCount = this.defaultListDataCount + this.addedListData
-      if (this.totalListData.length < this.listData.length) {
-        for (let i = this.addedListData; i < totalListDataCount; i++) {
-          if (totalListDataCount > this.totalListData.length) {
-            if (this.listData[i] !== undefined) {
-              this.totalListData.push(this.listData[i])
+      this.loading = true
+      setTimeout(() => {
+        let totalListDataCount = this.defaultListDataCount + this.addedListData
+        if (this.totalListData.length < this.listData.length) {
+          for (let i = this.addedListData; i < totalListDataCount; i++) {
+            if (totalListDataCount > this.totalListData.length) {
+              if (this.listData[i] !== undefined) {
+                this.totalListData.push(this.listData[i])
+              }
             }
           }
+          this.addedListData += 10
         }
-        this.addedListData += 5
-      }
+        this.loading = false
+      }, 500)
     },
-    fetchList(listData) {
-      if (listData === undefined) {
-        this.mainData = this.totalListData[0]
-      }
-      if (listData) {
-        this.mainData = listData
+    fetchList(currentData) {
+      this.mainData = this.listData[0]
+      if (currentData) {
+        this.mainData = currentData
       }
     },
   },
 }
 </script>
+
 <style lang="scss">
 .leftSide {
   overflow: auto;
-  height: 92%;
+  height: 100%;
 }
 .leftSide::-webkit-scrollbar {
   display: none;
-  height: 92%;
+  height: 100%;
 }
 .left-nav {
   ul {
@@ -97,6 +110,7 @@ export default {
     height: 80px;
   }
 }
+
 .leftContainer {
   ul {
     padding: 0 50px;
