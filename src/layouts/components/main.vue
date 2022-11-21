@@ -17,10 +17,12 @@ el-main
     .top
       h1 {{ mainData.name }}
       p period: {{ mainData.period }}
-    .middle 
-      h1 {{ mainData.name }}
-      p period: {{ mainData.period }}
-      img(:src="mainData.image")
+    .middle
+      el-carousel(:interval="5000" arrow="always" type="card" :autoplay="false" indicator-position="none")
+        el-carousel-item(v-for="(listData, index) in totalListData" @click="fetchList(listData, index)")
+          h1 project name: {{ listData.name }}
+          //- img(:src="listData.image")
+          //- p period: {{ listData.period }}
     .bottom
       p 사용기술: 
 </template>
@@ -74,15 +76,14 @@ export default {
   },
 }
 </script>
-
 <style lang="scss">
 .leftSide {
   overflow: auto;
-  height: 100%;
+  height: 92%;
 }
 .leftSide::-webkit-scrollbar {
   display: none;
-  height: 100%;
+  height: 92%;
 }
 .left-nav {
   ul {
@@ -119,6 +120,107 @@ export default {
         padding: 5px 0;
       }
     }
+  }
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 78%;
+  .top {
+    height: 36%;
+    padding: 100px 0 0 50px;
+    h1 {
+      margin: 0 0 20px 0;
+    }
+    p {
+      padding: 0 0 0 20px;
+    }
+  }
+  .middle {
+    height: 32%;
+    .el-carousel {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .el-carousel--horizontal {
+      overflow-x: hidden;
+      height: 100%;
+    }
+
+    .el-carousel__container {
+      display: flex;
+    }
+
+    .el-carousel__item {
+    }
+    .is-in-stage {
+    }
+    // .el-carousel__item h1 {
+    // }
+
+    .el-carousel__item--card {
+    }
+    .el-carousel__arrow {
+      border: none;
+      outline: none;
+      padding: 0;
+      margin: 0;
+      height: 36px;
+      width: 36px;
+      cursor: pointer;
+      transition: 0.3s;
+      border-radius: 50%;
+      background-color: rgba(31, 45, 61, 0.11);
+      color: #fff;
+      position: absolute;
+      top: 50%;
+      z-index: 10;
+      transform: translateY(-50%);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .el-carousel__arrow--left {
+      left: 16px;
+    }
+
+    .el-carousel__arrow--right {
+      right: 16px;
+    }
+
+    .el-icon-arrow-right .el-icon-arrow-right {
+      cursor: pointer;
+    }
+
+    .el-carousel__indicator--horizontal {
+      display: inline-block;
+      padding: 12px 4px;
+    }
+
+    .el-carousel__indicator {
+      background-color: transparent;
+      cursor: pointer;
+    }
+
+    li {
+      display: list-item;
+      text-align: -webkit-match-parent;
+    }
+
+    .el-carousel__indicators {
+      position: absolute;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      z-index: 2;
+    }
+  }
+  .bottom {
+    height: 14%;
   }
 }
 </style>
