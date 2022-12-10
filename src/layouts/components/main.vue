@@ -3,7 +3,7 @@ el-main
   .leftSide
     .left-nav
       ul
-        li(v-for="leftList in leftLists") 
+        li(v-for="leftList in leftLists" @click="movePage(leftList)") 
           h1 {{ leftList }}
     .leftContainer
       ul(v-infinite-scroll="fetchData" infinite-scroll-disabled="disabled")
@@ -13,18 +13,23 @@ el-main
           .p-container 
             h1 project name: {{ listData.name }}
             p period: {{ listData.period }}
-            p(v-if="loading") Loading...
-            p(v-if="noMore") No more
+      p.loadingText(v-if="loading") Loading...
+      p.loadingText(v-if="noMore") No more
   .main
     .top
       h1 {{ mainData.name }}
-      p period: {{ mainData.period }}
+      .top-right
+        p period: {{ mainData.period }}
+        p ~
+        p period: {{ mainData.period }}
+      p description: {{ mainData.description }}
     .middle
-      el-carousel(:interval="5000" arrow="always" type="card" :autoplay="false" indicator-position="none")
-        el-carousel-item(v-for="(listData, index) in totalListData" @click="fetchList(listData, index)")
-          h1 project name: {{ listData.name }}
-          //- img(:src="listData.image")
-          //- p period: {{ listData.period }}
+      .item
+        //- el-carousel(:interval="5000" arrow="always" type="card" height="300px" :autoplay="false" indicator-position="none")
+          //- el-carousel-item.item__content(v-for="(listData, index) in totalListData" @click="fetchList(listData, index)")
+            //- h1 project name: {{ listData.name }}
+            //- img.item__image(:src="listData.image")
+            //- p period: {{ listData.period }}
     .bottom
       p 사용기술: 
 </template>
@@ -62,6 +67,19 @@ export default {
     },
   },
   methods: {
+    // 추후 수정
+    movePage(pageName) {
+      if (pageName === "About Me") {
+        this.$router.push("/aboutMe")
+        console.log("hi1")
+      }
+      if (pageName === "Skills") {
+        this.$router.push("/skills")
+      }
+      if (pageName === "Projects") {
+        this.$router.push("/")
+      }
+    },
     fetchData() {
       this.loading = true
       setTimeout(() => {
@@ -112,6 +130,7 @@ export default {
 }
 
 .leftContainer {
+  height: 520px;
   ul {
     padding: 0 50px;
     li {
@@ -135,102 +154,64 @@ export default {
       }
     }
   }
+  .loadingText {
+    font-size: 20px;
+    padding: 20px 0;
+    text-align: center;
+  }
 }
 .main {
   display: flex;
   flex-direction: column;
-  width: 78%;
+  width: 80%;
   .top {
     height: 36%;
     padding: 100px 0 0 50px;
     h1 {
       margin: 0 0 20px 0;
     }
-    p {
+    .top-right {
+      display: flex;
+      justify-content: right;
+      font-size: 20px;
+      p:last-child {
+        padding: 0 30px 0 0;
+      }
+    }
+    .top-right + p {
       padding: 0 0 0 20px;
     }
   }
   .middle {
-    height: 32%;
-    .el-carousel {
-      justify-content: center;
-      align-items: center;
-      display: flex;
-      flex-direction: column;
+    .item {
       position: relative;
-    }
-
-    .el-carousel--horizontal {
-      overflow-x: hidden;
       height: 100%;
     }
 
-    .el-carousel__container {
-      display: flex;
-    }
-
-    .el-carousel__item {
-    }
-    .is-in-stage {
-    }
-    // .el-carousel__item h1 {
-    // }
-
-    .el-carousel__item--card {
-    }
-    .el-carousel__arrow {
-      border: none;
-      outline: none;
-      padding: 0;
-      margin: 0;
-      height: 36px;
-      width: 36px;
-      cursor: pointer;
-      transition: 0.3s;
-      border-radius: 50%;
-      background-color: rgba(31, 45, 61, 0.11);
+    .item__content {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.5);
       color: #fff;
-      position: absolute;
-      top: 50%;
-      z-index: 10;
-      transform: translateY(-50%);
-      text-align: center;
-      font-size: 12px;
+      padding: 3px;
     }
 
-    .el-carousel__arrow--left {
-      left: 16px;
+    .item__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .el-carousel__arrow--right {
-      right: 16px;
+    .el-carousel__item:nth-child(2n) {
+      background-color: #99a9bf;
     }
 
-    .el-icon-arrow-right .el-icon-arrow-right {
-      cursor: pointer;
-    }
-
-    .el-carousel__indicator--horizontal {
-      display: inline-block;
-      padding: 12px 4px;
-    }
-
-    .el-carousel__indicator {
-      background-color: transparent;
-      cursor: pointer;
-    }
-
-    li {
-      display: list-item;
-      text-align: -webkit-match-parent;
-    }
-
-    .el-carousel__indicators {
-      position: absolute;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      z-index: 2;
+    .el-carousel__item:nth-child(2n + 1) {
+      background-color: #d3dce6;
     }
   }
   .bottom {

@@ -20,11 +20,16 @@ export const constantRoutes = _.concat(
     path: "/",
     component: Layouts,
   },
-  // {
-  //   path: "/login",
-  //   component: () => import("@/views/home/login"),
-  //   meta: { title: "로그인" },
-  // },
+  {
+    path: "/aboutMe",
+    component: () => import("@/views/aboutMe.vue"),
+    meta: { title: "aboutMe" },
+  },
+  {
+    path: "/skills",
+    component: () => import("@/views/skills.vue"),
+    meta: { title: "skills" },
+  },
   { path: "*", component: PageNotFound }
 )
 
